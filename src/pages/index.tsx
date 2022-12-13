@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Pagination } from "../components/pagination";
 import { getAnimeList } from "../services/getAnimeList";
 
 type HomeProps = {
@@ -9,6 +11,8 @@ export default function Home({ text }: HomeProps) {
   const [offset, setOffset] = useState(0);
   const [sorting, setSorting] = useState("");
   const [order, setOrder] = useState("-");
+  const [total, setTotal] = useState(0);
+  const limit = 20;
 
   const sortingDesc = [
     { name: "", value: "Sem ordem" },
@@ -22,11 +26,11 @@ export default function Home({ text }: HomeProps) {
       const response = await getAnimeList({
         name: text,
         offset,
-        limit: 20,
+        limit,
         order,
         sorting,
       });
-      return setAnimeList(response.data);
+      return setAnimeList(response.data), setTotal(response.meta.count);
     };
     fetchData();
   }, [text, offset, sorting, order]);
@@ -72,17 +76,25 @@ export default function Home({ text }: HomeProps) {
         {text && !animeList && <div>Carregando...</div>}
         {animeList?.map((anime: any, k: number) => (
           <div key={k} className="grid grid-col-1">
-            <img
-              className="row-start-1 row-end-3 col-[1]"
-              src={anime.attributes.posterImage?.small}
-              alt={anime.attributes.canonicalTitle}
-            />
+            <Link to={`/anime/${anime.id}`}>
+              <img
+                className="row-start-1 row-end-3 col-[1]"
+                src={anime.attributes.posterImage?.small}
+                alt={anime.attributes.canonicalTitle}
+              />
+            </Link>
             <h1 className="text-white bg-black bg-opacity-80 row-[2] col-[1]">
               {anime.attributes.canonicalTitle}
             </h1>
           </div>
         ))}
       </div>
+      <Pagination
+        offset={offset}
+        limit={limit}
+        setOffset={setOffset}
+        total={total}
+      />
     </section>
   );
 }

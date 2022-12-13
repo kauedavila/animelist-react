@@ -1,4 +1,4 @@
-type AnimeProps = {
+type AnimeListProps = {
   name: string;
   offset: number;
   limit: number;
@@ -13,7 +13,7 @@ export async function getAnimeList({
   limit,
   order,
   sorting,
-}: AnimeProps) {
+}: AnimeListProps) {
   try {
     const response = await fetch(
       name === ""

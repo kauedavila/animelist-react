@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchInput from "./SearchInput";
-import { getAnimeList } from "../services/getAnimeList";
 
 type HeaderProps = {
   text: string;
@@ -21,9 +19,11 @@ export default function Header({ text, setText }: HeaderProps) {
           <img width={100} src="/logo.svg" />
         </Link>
       </div>
-      <div className="flex justify-center">
-        <SearchInput value={text} onChange={(e) => setText(e)} />
-      </div>
+      {location.pathname === "/" && (
+        <div className="flex justify-center">
+          <SearchInput value={text} onChange={(e) => setText(e)} />
+        </div>
+      )}
     </nav>
   );
 }
