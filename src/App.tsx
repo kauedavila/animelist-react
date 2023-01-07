@@ -7,7 +7,6 @@ import AnimePage from "./pages/anime-page";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
-  const [animeId, setAnimeId] = useState(0);
 
   return (
     <Router>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getAnimeInfos } from "../services/getAnimeInfos";
 
 export default function AnimePage() {
-  const [animeInfos, setAnimeInfos] = useState([]);
+  const [animeInfos, setAnimeInfos]: any = useState([]);
   const id = Number(location.pathname.replace("/anime/", ""));
 
   const fetchData = async () => {
