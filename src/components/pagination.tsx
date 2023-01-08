@@ -3,7 +3,12 @@ import clsx from "clsx";
 const MAX_ITEMS = 5;
 const MAX_LEFT = (MAX_ITEMS - 1) / 2;
 
-export const Pagination = (props) => {
+export const Pagination = (props: {
+  limit: number;
+  total: number;
+  offset: number;
+  setOffset: (offset: number) => void;
+}) => {
   const { limit, total, offset, setOffset } = props;
 
   const current = offset ? offset / limit + 1 : 1;
